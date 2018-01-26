@@ -1,23 +1,22 @@
 package npr.com.galleryapp.modle;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by ESHAN on 1/25/2018.
  */
 
 public class AlbumInfo {
+    @SerializedName("id")
     String mId;
+    @SerializedName("albumId")
     String mAlbumId;
+    @SerializedName("title")
     String mTitle;
+    @SerializedName("url")
     String mUrl;
+    @SerializedName("thumbnailUrl")
     String mThumbnailUrl;
-
-    AlbumInfo(String id, String albumId, String title, String url, String thumbNail) {
-        mId = id;
-        mAlbumId = albumId;
-        mTitle = title;
-        mUrl = url;
-        mThumbnailUrl = thumbNail;
-    }
 
     public String getId() {
         return mId;
@@ -37,5 +36,10 @@ public class AlbumInfo {
 
     public String getThumbnailUrl() {
         return mThumbnailUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "[ id: "+mId+" mAlbumId: "+mAlbumId+" mTitle: "+mTitle+" mUrl:"+mUrl+" mThumbnailUrl:"+mThumbnailUrl+" ]";
     }
 }

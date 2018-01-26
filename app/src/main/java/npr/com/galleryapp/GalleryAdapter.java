@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import npr.com.galleryapp.backend.BackendRequest;
 import npr.com.galleryapp.modle.AlbumInfo;
 
 /**
@@ -20,6 +22,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     List<AlbumInfo> mIconUrls = new ArrayList<>();
     public static final String  IMAGE_URL = "IMAGE_URL";
     OnItemSelectListener mListener;
+    private static final String TAG = "GalleryAdapter";
 
     GalleryAdapter(OnItemSelectListener listener){
         mListener = listener;
@@ -41,13 +44,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     public void onBindViewHolder(GalleryViewHolder holder, final int position) {
         //async task to fetch icon.
 
+        holder.mIconId.setText(mIconUrls.get(position).getId());
         holder.mIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 mListener.itemSelected(mIconUrls.get(position).getUrl());
             }
         });
+
+        new BackendRequest().downloadIcon(mIconUrls.get(position).getThumbnailUrl(), holder.mIcon);
     }
 
     @Override
@@ -58,10 +63,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     class GalleryViewHolder extends RecyclerView.ViewHolder {
 
         ImageView mIcon;
+        TextView mIconId;
 
         public GalleryViewHolder(View itemView) {
             super(itemView);
             mIcon = itemView.findViewById(R.id.item_icon);
+            mIconId = itemView.findViewById(R.id.item_id);
         }
     }
 
